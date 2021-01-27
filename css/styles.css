@@ -1,5 +1,16 @@
+body {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .hidden {
     display: none;
+}
+
+main {
+    color: white;
 }
 
 .backgroundImage {
@@ -9,4 +20,14 @@
     left: 0;
     height: 100vh;
     width: 100vw;
+    animation: fadein 0.2s ease-in-out;
+}
+
+@keyframes fadein {
+    from{
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
 }
