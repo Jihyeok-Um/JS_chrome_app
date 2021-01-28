@@ -5,9 +5,10 @@ function handleGeoSuccess(position) {
     const longitude = ;
     const coordsObj = {
         latitude,
-        longitude
+        longitudeㅊ
     }
     //강의 이어보기
+    //커밋용
 }
 
 function handleGeoError() {
