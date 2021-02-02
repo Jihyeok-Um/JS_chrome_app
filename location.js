@@ -1,14 +1,33 @@
+const weather = document.querySelector(".js-weather");
+
 const COORDS = "coords";
+const API_KEY = "4c19a0eea7401fa093cdce5e85ede7e9"; 
+
+function getWeather(lat, lng) {
+    fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lng}&appid=${API_KEY}&units=metric`)
+    .then(function(response) {
+        return response.json();
+    })
+    .then(function(json) {
+        const temperature = json.main.temp;
+        const place = json.name;
+        weather.innerText = `${place}, ${temperature}degree`;
+    })
+}
+
+function saveCoords(coordsObj){
+    localStorage.setItem(COORDS, JSON.stringify(coordsObj));
+}
 
 function handleGeoSuccess(position) {
-    const latitude = ;
-    const longitude = ;
+    const latitude = position.coords.latitude;
+    const longitude = position.coords.longitude;
     const coordsObj = {
         latitude,
-        longitudeㅊ
+        longitude
     }
-    //강의 이어보기
-    //커밋용
+    saveCoords(coordsObj);
+    getWeather(latitude, longitude);
 }
 
 function handleGeoError() {
@@ -16,7 +35,7 @@ function handleGeoError() {
 }
 
 function askCoords() {
-    navigator.geolocation.getCurrentPosition(handleGeoError, handleGeoError)
+    navigator.geolocation.getCurrentPosition(handleGeoSuccess, handleGeoError)
 }
 
 function loadCoords() {
@@ -25,11 +44,12 @@ function loadCoords() {
         askCoords();
     } 
     else {
-        //getWeather
+        const parseCoords = JSON.parse(loadedCoords);;
+        getWeather(parseCoords.latitude, parseCoords.longitude);
     }
 }
 
 function init() {
-
+    loadCoords();
 }
 init();
